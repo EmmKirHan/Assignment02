@@ -8,7 +8,7 @@ namespace StudentLibrary
         public Student(int id, string givenName, string surName, DateTime startDate, DateTime graduationDate)
         {
             Id = id;
-            EndDate = new DateTime(1000, 1, 1);
+            EndDate = new DateTime(1, 1, 1);
         }
         public int Id { get; }
         public string GivenName { get; set; }
@@ -18,30 +18,30 @@ namespace StudentLibrary
         public DateTime GraduationDate { get; set; }
         public Status Status
         {
-            get
-            {
-                return Status;
-            }
-            private set { Status = value; }
+            get => CalculateStatus(DateTime.Now);
         }
 
-        private void UpdateStatus()
+        public Status CalculateStatus(DateTime now)
         {
-            if (EndDate.Year != 1000)
+            if (EndDate.Year != 1)
             {
-                Status = Status.Dropout;
+                return Status.Dropout;
             }
-            else if (DateTime.Now.Year == StartDate.Year)
+            else if (now.Year == StartDate.Year)
             {
-                Status = Status.New;
+                return Status.New;
             }
-            else if (DateTime.Now > StartDate && DateTime.Now < GraduationDate)
+            else if (now.CompareTo(StartDate) > 0 && now.CompareTo(GraduationDate) < 0)
             {
-                Status = Status.Active;
+                return Status.Active;
             }
-            else if (DateTime.Now > GraduationDate)
+            else if (now.CompareTo(GraduationDate) > 0)
             {
-                Status = Status.Graduated;
+                return Status.Graduated;
+            }
+            else
+            {
+                return Status.Null;
             }
         }
     }
@@ -52,5 +52,6 @@ public enum Status
     New,
     Active,
     Dropout,
-    Graduated
+    Graduated,
+    Null
 }

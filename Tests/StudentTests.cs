@@ -24,13 +24,13 @@ namespace Tests
         [Fact]
         public void Status_is_New_if_Current_Year_equals_Start_Year()
         {
-            Student student = new Student(1234, "Alice", "Bobsen", new DateTime(2021, 8, 1), new DateTime(2024, 6, 30));
+            Student student = new Student(1234, "Alice", "Bobsen", new DateTime(2021, 8, 1, 0, 0, 0), new DateTime(2024, 6, 30, 0, 0, 0));
 
             Assert.Equal(Status.New, student.Status);
         }
 
         [Fact]
-        public void Status_is_Dropout_if_EndDate_is_before_GraduationDate()
+        public void Status_is_Dropout_if_EndDate_is_not_default_value()
         {
             Student student = new Student(1234, "Per", "Persen", new DateTime(2021, 8, 1), new DateTime(2024, 6, 30));
 
@@ -47,12 +47,12 @@ namespace Tests
             Assert.Equal(Status.Graduated, student.Status);
         }
 
-        // [Fact]
-        // public void Status_is_null_if_current_date_is_before_startDate()
-        // {
-        //     Student student = new Student(1234, "Sofie", "Karstensen", new DateTime(2022, 8, 1), new DateTime(2025, 6, 30));
-        //     //Assert.(student.Status);
-        // }
+        [Fact]
+        public void Status_is_null_if_current_date_is_before_startDate()
+        {
+            Student student = new Student(1234, "Sofie", "Karstensen", new DateTime(2022, 8, 1), new DateTime(2025, 6, 30));
+            Assert.Equal(Status.Null, student.Status);
+        }
 
         [Fact]
         public void ToString_returns_something_nice()
