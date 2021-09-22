@@ -1,25 +1,15 @@
-﻿using System;
+using System;
 
 namespace StudentLibrary
 {
-    public class Student
-
+    public record ImmutableStudent
     {
-        public Student(int id, string givenName, string surName, DateTime startDate, DateTime graduationDate)
-        {
-            Id = id;
-            EndDate = new DateTime(1, 1, 1);
-            StartDate = startDate;
-            GraduationDate = graduationDate;
-            GivenName = givenName;
-            SurName = surName;
-        }
-        public int Id { get; }
-        public string GivenName { get; set; }
-        public string SurName { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public DateTime GraduationDate { get; set; }
+        public int Id { get; init; }
+        public string GivenName { get; init; }
+        public string SurName { get; init; }
+        public DateTime StartDate { get; init; }
+        public DateTime EndDate { get; init; }
+        public DateTime GraduationDate { get; init; }
         public Status Status
         {
             get => CalculateStatus(DateTime.Now);
@@ -54,13 +44,4 @@ namespace StudentLibrary
             return "Id: " + Id + " - Name: " + GivenName + " " + SurName + " - Status: " + Status;
         }
     }
-}
-
-public enum Status
-{
-    New,
-    Active,
-    Dropout,
-    Graduated,
-    Null
 }
